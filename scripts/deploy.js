@@ -1,7 +1,7 @@
-import { ethers } from "hardhat";
+const { ethers } = require("hardhat");
 
 async function main() {
-  const BatchTransfer = await ethers.getContractFactory("BatchTransfer");
+  const BatchTransfer = await ethers.getContractFactory("Bulksend");
   const batchTransfer = await BatchTransfer.deploy();
 
   await batchTransfer.deployed();

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 interface IERC20  {
-    function approve(address spender, uint256 amount) external returns (bool);
+    // function approve(address spender, uint256 amount) external returns (bool);
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 }
 
@@ -17,13 +17,13 @@ interface IERC20  {
 contract Bulksend {
     //Public state variable
     address public owner;
-
+    
     constructor() public  {
         owner = msg.sender;
     }
 
     //Mapping an address to its balance
-    mapping(address => uint) balances;
+    // mapping(address => uint) balances;
 
     //Function to get address of owner
     function getOwner() public view returns (address) {
@@ -36,13 +36,10 @@ contract Bulksend {
     }
 
     //Function to transfer to many addresses
-    function multiTransfer(IERC20 _token, address[] calldata _toAddresses, uint256[] calldata _amount) public payable {
+    function multiTransfer(IERC20 _token, address[] calldata _toAddresses, uint256[] calldata _amount) public {
         require(_toAddresses.length == _amount.length, "Length inconsistent");
-        uint256 requiredAmount = _toAddresses.length * _amount.length;
-        _token.approve(address(this), requiredAmount);
-
         for(uint i = 0; i < _toAddresses.length; i++) {
-            _token.transferFrom(msg.sender, payable(_toAddresses[i]), _amount[i]);
+            _token.transferFrom(msg.sender, _toAddresses[i], _amount[i]);
         }
     }  
 }
